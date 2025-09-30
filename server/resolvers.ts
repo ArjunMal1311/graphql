@@ -1,6 +1,6 @@
 import { GraphQLError } from "graphql";
-import { getCompany } from "./db/companies";
-import { countJobs, getJob, getJobs, getJobsByCompany } from "./db/jobs";
+import { getCompany } from "./db/companies.ts";
+import { countJobs, createJob, deleteJob, getJob, getJobs, getJobsByCompany, updateJob } from "./db/jobs.ts";
 
 export const resolvers = {
     Query: {
@@ -25,6 +25,37 @@ export const resolvers = {
         },
     },
 
+    Mutation: {
+        createJob: (_root, { input: { title, description } }, { user }) => { // destructuring user from context passed in server.ts
+          if (!user) {
+            throw unauthorizedError('Missing authentication');
+          }
+          return createJob({ companyId: user.companyId, title, description });
+        },
+    
+        deleteJob: async (_root, { id }, { user }) => {
+          if (!user) {
+            throw unauthorizedError('Missing authentication');
+          }
+          const job = await deleteJob(id, user.companyId);
+          if (!job) {
+            throw notFoundError('No Job found with id ' + id);
+          }
+          return job;
+        },
+    
+        updateJob: async (_root, { input: { id, title, description } }, { user }) => {
+          if (!user) {
+            throw unauthorizedError('Missing authentication');
+          }
+          const job = await updateJob({ id, companyId: user.companyId, title, description });
+          if (!job) {
+            throw notFoundError('No Job found with id ' + id);
+          }
+          return job;
+        },
+      },
+
     Company: {
         jobs: (company) => getJobsByCompany(company.id),
     },
@@ -34,6 +65,8 @@ export const resolvers = {
             return companyLoader.load(job.companyId);
         },
         date: (job) => toIsoDate(job.createdAt),
+        salary: (job) => 5.5,         
+        location: (job) => "CHD"
     },
 }
 

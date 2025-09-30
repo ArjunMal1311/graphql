@@ -1,5 +1,5 @@
 import DataLoader from 'dataloader';
-import { connection } from './connection.js';
+import { connection } from './connection.ts';
 
 const getCompanyTable = () => connection.table('company');
 

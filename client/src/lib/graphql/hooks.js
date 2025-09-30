@@ -37,6 +37,7 @@ export function useCreateJob() {
         });
       },
     });
+    console.log(job)
     return job;
   };
 

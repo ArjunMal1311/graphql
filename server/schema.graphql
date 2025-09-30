@@ -24,6 +24,8 @@ type Job {
   title: String!
   company: Company!
   description: String
+  salary: Float
+  location: String
 }
 
 type JobSubList {

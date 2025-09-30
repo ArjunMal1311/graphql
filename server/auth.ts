@@ -1,6 +1,6 @@
 import { expressjwt } from 'express-jwt';
 import jwt from 'jsonwebtoken';
-import { getUserByEmail } from './db/users';
+import { getUserByEmail } from './db/users.ts';
 
 const secret = Buffer.from('Zn8Q5tyZ/G1MHltc4F/gTkVJMlrbKiZt', 'base64');
 

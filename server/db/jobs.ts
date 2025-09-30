@@ -1,5 +1,5 @@
-import { connection } from './connection.js';
-import { generateId } from './id.js';
+import { connection } from './connection.ts';
+import { generateId } from './id.ts';
 
 const getJobTable = () => connection.table('job');
 
@@ -36,6 +36,7 @@ export async function createJob({ companyId, title, description }) {
         description,
         createdAt: new Date().toISOString(),
     };
+    console.log(job)
     await getJobTable().insert(job);
     return job;
 }

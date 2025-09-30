@@ -4,7 +4,7 @@
     "license": "MIT",
     "type": "module",
     "scripts": {
-        "start": "nodemon server.js"
+        "start": "nodemon --exec \"ts-node --esm\" server.ts"
     },
     "dependencies": {
         "@apollo/server": "^4.9.4",
@@ -19,9 +19,11 @@
         "nanoid": "^5.0.1"
     },
     "devDependencies": {
-        "nodemon": "^3.0.1"
+        "nodemon": "^3.0.1",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.2.2"
     },
     "nodemonConfig": {
-        "ext": "graphql,js"
+        "ext": "graphql,js,ts"
     }
 }
