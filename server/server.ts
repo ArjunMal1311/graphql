@@ -30,6 +30,7 @@ app.post('/login', handleLogin);
 
   const apolloServer = new ApolloServer({ typeDefs, resolvers });
   await apolloServer.start();
+  // @ts-ignore
   app.use('/graphql', apolloMiddleware(apolloServer, { context: getContext }));
 
   app.listen({ port: PORT }, () => {

@@ -23,6 +23,10 @@ export const resolvers = {
             const totalCount = await countJobs();
             return { items, totalCount };
         },
+        atg: async(_root, { id }, context, info) => {
+          console.log("Query.atg resolver called. args:", { id });
+          return { id };
+      }
     },
 
     Mutation: {
@@ -62,20 +66,32 @@ export const resolvers = {
 
     Job: {
         company: (job, _args, { companyLoader }) => {
+            console.log("Job.company resolver called. job:", job);
             return companyLoader.load(job.companyId);
         },
         date: (job) => toIsoDate(job.createdAt),
-        salary: (job) => 5.5,         
-        location: (job) => "CHD"
+        salary: () => 5.5,         
+        location: () => "CHD"
     },
-}
 
+    ATG: {
+      id: (parent, args, context, info) => {
+          console.log("ATG.id resolver called. parent:", parent);
+          return `ID for ATG: ${parent.id}`;
+      },
+      name: (parent, args, context, info) => {
+          console.log("ATG.name resolver called. parent:", parent);
+          return `Name for ATG: ${parent.id}`;
+      }
+  }
+};
 
 function notFoundError(message) {
     return new GraphQLError(message, {
         extensions: { code: 'NOT_FOUND' },
     });
 }
+
 function unauthorizedError(message) {
     return new GraphQLError(message, {
         extensions: { code: 'UNAUTHORIZED' },

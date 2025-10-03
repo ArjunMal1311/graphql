@@ -2,6 +2,7 @@ type Query {
   company(id: ID!): Company
   job(id: ID!): Job
   jobs(limit: Int, offset: Int): JobSubList
+  atg(id: ID!): ATG
 }
 
 type Mutation {
@@ -42,4 +43,9 @@ input UpdateJobInput {
   id: ID!
   title: String!
   description: String
+}
+
+type ATG {
+  id: ID!
+  name: String!
 }
