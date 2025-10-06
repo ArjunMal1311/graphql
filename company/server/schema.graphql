@@ -1,0 +1,41 @@
+type Query {
+    companies: [Company]
+    breeds: String
+    employees: [Employee]
+    company(id: String): [Company]
+}
+
+type Company {
+    id: String
+    name: String
+    description: String
+    employees: [Employee]
+}
+
+input AddCompanyInput {
+  name: String!
+  description: String
+}
+
+type Employee {
+    id: String,
+    name: String,
+    outlook: String
+}
+
+type Mutation {
+  addCompany(input: AddCompanyInput!): Company
+}
+
+type Subscription {
+  companyAdded: Company
+}
+
+
+# mutation {
+#   addCompany(input: { name: "NewCo", description: "A new company" }) {
+#     id
+#     name
+#     description
+#   }
+# }
